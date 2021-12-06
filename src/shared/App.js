@@ -16,15 +16,6 @@ import Feed from "../pages/Feed";
 function App() {
   return (
     <div className="App">
-      <div>
-        <Link to="/">메인</Link><br/>
-        <Link to="/login">로그인</Link><br/>
-        <Link to="/signUp">회원가입</Link><br/>
-        <Link to="/feed">피드</Link><br/>
-        <Link to="/postDetail">게시물 상세</Link><br/>
-        <Link to="/postWrite">게시물 작성</Link>
-      </div>
-
       <Switch>
         <Route path="/" exact component={Index}></Route>
         <Route path="/login" exact component={Login}></Route>
