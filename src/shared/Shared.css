@@ -1,3 +1,11 @@
-.no-scroll::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+.scroll {
+  height : 600px;
+  overflow: scroll;
+  /* IE scroll 숨김 */
+  -ms-overflow-style: none;
+}
+
+.scroll::-webkit-scrollbar { 
+  width: 0 !important;
+  display: none; 
 }

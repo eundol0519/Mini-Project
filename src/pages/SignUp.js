@@ -19,7 +19,7 @@ const SignUp = (props) => {
   };
 
   return (
-    <div style={{overflow:"hidden"}}>
+    <div>
       <Modal
         isOpen={modal}
         ariaHideApp={false}

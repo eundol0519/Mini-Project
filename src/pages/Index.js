@@ -15,7 +15,7 @@ const Index = (props) => {
   const history = useHistory();
 
   return (
-    <div style={{overflow:"hidden"}}>
+    <div className="scroll">
       <Header></Header>
       <Grid padding="1%">
         <Text size="2vw" bold>
@@ -30,7 +30,7 @@ const Index = (props) => {
           <Grid is_flex margin="40px 0px 40px 0px" center>
             <Button
               width="20vw"
-              margin="0px 0px 0px 400px"
+              margin="0px 0px 0px 28%"
               _onClick={() => {
                 history.push("/postWrite");
               }}
@@ -39,7 +39,7 @@ const Index = (props) => {
             </Button>
             <Button
               width="20vw"
-              margin="0px 400px 0px 0px"
+              margin="0px 28% 0px 0px"
               _onClick={() => {
                 history.push("/postDetail");
               }}
