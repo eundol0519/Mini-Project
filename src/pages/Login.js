@@ -25,6 +25,7 @@ const Login = (props) => {
   const login = () => {
     window.alert("로그인 성공 했습니다.");
     setModal(false);
+    props.setIsLogin(true); // 임시
     // redux에 login을 dispatch 해야 함.
   };
 
@@ -40,7 +41,7 @@ const Login = (props) => {
   }
 
   return (
-    <>
+    <div style={{overflow:"hidden"}}>
       {signUpModal ? ( // 회원가입 버튼을 눌렀을 경우
         <SignUp modal={signUpModal} setSignUpModal={props.setSignUpModal} setLoginModal={props.setLoginModal}></SignUp>
         // 2번 경우처럼 로그인 -> 회원가입으로 이동하는 것이기 때문에 loginModal과 signUpModal을 보냅니다.
@@ -106,7 +107,7 @@ const Login = (props) => {
           </Grid>
         </Modal>
       )}
-    </>
+    </div>
   );
 };
 

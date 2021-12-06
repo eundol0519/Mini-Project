@@ -39,7 +39,7 @@ const Header = (props) => {
           </Grid>
   
           <Grid is_flex>
-            <Button _onClick={()=>{history.push('/feed')}}>피드</Button>
+            <Button _onClick={()=>{history.push('/feed')}}> 피드</Button>
             <Button _onClick={logOut}>로그아웃</Button>
           </Grid>
         </Grid>
@@ -48,7 +48,7 @@ const Header = (props) => {
   }
 
   return (
-    <React.Fragment>
+    <div style={{overflow:"hidden"}}>
       <Grid is_flex padding="4px 16px">
         <Grid _onClick={() => history.push("/")}>
           <Text margin="0px" size="24px" bold>
@@ -59,7 +59,7 @@ const Header = (props) => {
         <Grid is_flex>
           <Button _onClick={loginModalOpen}>로그인</Button>
           {
-              loginModal && <Login modal={loginModal} setLoginModal={setLoginModal} setSignUpModal={setSignUpModal}></Login>
+              loginModal && <Login modal={loginModal} setLoginModal={setLoginModal} setSignUpModal={setSignUpModal} setIsLogin={setIsLogin}></Login>
               // 기존 코드 loginModal && <Login modal={loginModal}></Login>에서는
               // login modal이 꺼지더라도 loginModal은 true이기 때문에 버튼을 누를 수 없습니다.
 
@@ -78,7 +78,7 @@ const Header = (props) => {
           }
         </Grid>
       </Grid>
-    </React.Fragment>
+    </div>
   );
 };
 

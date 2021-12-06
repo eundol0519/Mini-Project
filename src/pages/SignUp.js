@@ -19,7 +19,7 @@ const SignUp = (props) => {
   };
 
   return (
-    <>
+    <div style={{overflow:"hidden"}}>
       <Modal
         isOpen={modal}
         ariaHideApp={false}
@@ -36,7 +36,7 @@ const SignUp = (props) => {
       >
         회원가입
       </Modal>
-    </>
+    </div>
   );
 };
 
