@@ -9,6 +9,7 @@ import { Grid, Button, Input, Text } from "../elements/index";
 import SignUp from "../pages/SignUp";
 
 const Login = (props) => {
+
   const [id, setId] = React.useState(""); // 아이디
   const [pwd, setPwd] = React.useState(""); // 비밀번호
   const [modal, setModal] = React.useState(props.modal ? true : false); // 모달창이 열렸는 지 닫혔는 지
@@ -32,17 +33,23 @@ const Login = (props) => {
     setSignUpModal(true);
   };
 
+  // 모달창을 닫으면 header의 state도 false로 바꾸기
+  const modalOff = () => {
+    setModal(false);
+    props.setLoginModal(false);
+  }
+
   return (
     <>
       {signUpModal ? ( // 회원가입 버튼을 눌렀을 경우
-        <SignUp modal={signUpModal}></SignUp>
+        <SignUp modal={signUpModal} setSignUpModal={props.setSignUpModal} setLoginModal={props.setLoginModal}></SignUp>
+        // 2번 경우처럼 로그인 -> 회원가입으로 이동하는 것이기 때문에 loginModal과 signUpModal을 보냅니다.
       ) : (
         // 누르지 않았을 경우
-
         <Modal
           isOpen={modal}
           ariaHideApp={false}
-          onRequestClose={() => setModal(false)}
+          onRequestClose={modalOff}
           // 모달창 밖을 누르거나, ESC를 누를 경우 모달창을 끈다.
           style={{
             // inLine Styles

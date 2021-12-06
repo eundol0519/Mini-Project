@@ -59,11 +59,22 @@ const Header = (props) => {
         <Grid is_flex>
           <Button _onClick={loginModalOpen}>로그인</Button>
           {
-              loginModal && <Login modal={loginModal}></Login>
+              loginModal && <Login modal={loginModal} setLoginModal={setLoginModal} setSignUpModal={setSignUpModal}></Login>
+              // 기존 코드 loginModal && <Login modal={loginModal}></Login>에서는
+              // login modal이 꺼지더라도 loginModal은 true이기 때문에 버튼을 누를 수 없습니다.
+
+              // 수정 코드에서는 setLoginModal이라는 key 값에 setLoginModal state 변경 함수를
+              // value로 넘겨서 자식 컴포넌트에서 부모 컴포넌트의 state를 변경 할 수 있도록 하였습니다.
+
+               // + Header에서 로그인을 누를 때 사용자가 이동 할 수 있는 경로는 2가지 입니다.
+               // 1) 헤더 로그인 버튼 클릭 -> 로그인 기능 이용
+               // : 이 경우에는 setLoginModal만 가져가서 modal창이 닫힐 때 false로 바꿔주면 됩니다.
+               // 2) 헤더 로그인 버튼 클릭 -> 회원가입 버튼 클릭 -> 회원가입 기능 이용
+               // : 이 경우에는 loginModal, signUpModal 둘 다 true가 되기 때문에 둘 다 false로 바꿔줘야 합니다.
           }
           <Button _onClick={signUpModalOpen}>회원가입</Button>
           {
-              signUpModal && <SignUp modal={signUpModal}></SignUp>
+              signUpModal && <SignUp modal={signUpModal} setSignUpModal={setSignUpModal}></SignUp>
           }
         </Grid>
       </Grid>
