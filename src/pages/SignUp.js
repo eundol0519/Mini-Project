@@ -19,11 +19,11 @@ const SignUp = (props) => {
         // 모달창 밖을 누르거나, ESC를 누를 경우 모달창을 끈다.
         style={{
           // inLine Styles
-          overlay: {
-            left: "30%",
-            right: "30%",
-            botton: "10%",
-          },
+          content : {
+            left : "30%",
+            right : "30%",
+            botton : "10%",
+          }
         }}
       >
         회원가입

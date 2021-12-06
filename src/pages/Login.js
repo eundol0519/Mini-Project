@@ -19,7 +19,7 @@ const Login = (props) => {
   const checkActive = () => {
     id !== "" && pwd !== "" ? setActive(false) : setActive(true);
   };
-  
+
   // 로그인 버튼 클릭 시
   const login = () => {
     window.alert("로그인 성공 했습니다.");
@@ -27,25 +27,32 @@ const Login = (props) => {
     // redux에 login을 dispatch 해야 함.
   };
 
+  // 회원가입 버튼 클릭 시
+  const join = () => {
+    setSignUpModal(true);
+  };
+
   return (
     <>
-      <Modal
-        isOpen={modal}
-        ariaHideApp={false}
-        onRequestClose={() => setModal(false)}
-        // 모달창 밖을 누르거나, ESC를 누를 경우 모달창을 끈다.
-        style={{
-          // inLine Styles
-          overlay: {
-            left: "30%",
-            right: "30%",
-            botton: "10%",
-          },
-        }}
-      >
-        {signUpModal ? ( // 회원가입 버튼을 눌렀을 경우
-          <SignUp modal={signUpModal}></SignUp>
-        ) : ( // 누르지 않았을 경우
+      {signUpModal ? ( // 회원가입 버튼을 눌렀을 경우
+        <SignUp modal={signUpModal}></SignUp>
+      ) : (
+        // 누르지 않았을 경우
+
+        <Modal
+          isOpen={modal}
+          ariaHideApp={false}
+          onRequestClose={() => setModal(false)}
+          // 모달창 밖을 누르거나, ESC를 누를 경우 모달창을 끈다.
+          style={{
+            // inLine Styles
+            content: {
+              left: "30%",
+              right: "30%",
+              botton: "10%",
+            },
+          }}
+        >
           <Grid padding="16px" center>
             <Text size="3vw" margin="6vh" bold>
               로그인
@@ -85,17 +92,13 @@ const Login = (props) => {
               </Button>
               <Hr />
               <p>아직 회원이 아니시라면?</p>
-              <Button
-                width="18vw"
-                margin="1% 0px 1% 0px"
-                _onClick={() => setSignUpModal(true)}
-              >
+              <Button width="18vw" margin="1% 0px 1% 0px" _onClick={join}>
                 회원가입
               </Button>
             </Grid>
           </Grid>
-        )}
-      </Modal>
+        </Modal>
+      )}
     </>
   );
 };
