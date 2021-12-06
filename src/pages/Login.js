@@ -2,9 +2,107 @@
 
 // *** 패키지 import
 import React from "react";
+import styled from "styled-components";
+import Modal from "react-modal";
+
+import { Grid, Button, Input, Text } from "../elements/index";
+import SignUp from "../pages/SignUp";
 
 const Login = (props) => {
-  return <React.Fragment>로그인 페이지</React.Fragment>;
+  const [id, setId] = React.useState(""); // 아이디
+  const [pwd, setPwd] = React.useState(""); // 비밀번호
+  const [modal, setModal] = React.useState(props.modal ? true : false); // 모달창이 열렸는 지 닫혔는 지
+  const [active, setActive] = React.useState(true); // disabled가 활성화인 지 비활성화인 지
+  const [signUpModal, setSignUpModal] = React.useState(false); // 로그인창인 지 회원가입 창인 지
+
+  // disabled 체크
+  const checkActive = () => {
+    id !== "" && pwd !== "" ? setActive(false) : setActive(true);
+  };
+  
+  // 로그인 버튼 클릭 시
+  const login = () => {
+    window.alert("로그인 성공 했습니다.");
+    setModal(false);
+  };
+
+  return (
+    <>
+      <Modal
+        isOpen={modal}
+        ariaHideApp={false}
+        onRequestClose={() => setModal(false)}
+        // 모달창 밖을 누르거나, ESC를 누를 경우 모달창을 끈다.
+        style={{
+          // inLine Styles
+          overlay: {
+            left: "30%",
+            right: "30%",
+            botton: "10%",
+          },
+        }}
+      >
+        {signUpModal ? ( // 회원가입 버튼을 눌렀을 경우
+          <SignUp modal={signUpModal}></SignUp>
+        ) : ( // 누르지 않았을 경우
+          <Grid padding="16px" center>
+            <Text size="3vw" margin="6vh" bold>
+              로그인
+            </Text>
+            <Grid padding="16px 0px" height="20%">
+              <Input
+                type="text"
+                label="아이디"
+                placeholder="아이디를 입력 해주세요"
+                value={id}
+                _onChange={(e) => {
+                  setId(e.target.value);
+                }}
+                _onKeyUp={checkActive}
+              ></Input>
+              <Input
+                type="password"
+                label="비밀번호"
+                placeholder="비밀번호를 입력 해주세요"
+                value={pwd}
+                _onChange={(e) => {
+                  setPwd(e.target.value);
+                }}
+                _onKeyUp={checkActive}
+                is_submit
+                onSubmit={login}
+              ></Input>
+
+              <Button
+                className={!active ? "activeBtn" : "unActiveBtn"}
+                width="18vw"
+                margin="1% 0px 3% 0px"
+                _onClick={login}
+                disabled={active}
+              >
+                로그인
+              </Button>
+              <Hr />
+              <p>아직 회원이 아니시라면?</p>
+              <Button
+                width="18vw"
+                margin="1% 0px 1% 0px"
+                _onClick={() => setSignUpModal(true)}
+              >
+                회원가입
+              </Button>
+            </Grid>
+          </Grid>
+        )}
+      </Modal>
+    </>
+  );
 };
+
+const Hr = styled.hr`
+  margin-top: 3%;
+  margin-bottom: 3%;
+  width: 80%;
+`;
 
 export default Login;

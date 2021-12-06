@@ -1,15 +1,30 @@
-// Text.js
+import React from "react";
+import styled from "styled-components";
 
-// *** 패키지 import
-import React from "react"; 
+const Text = (props) => {
+  const { bold, color, size, children, margin } = props;
 
-const Text = (props)=>{
-    return(
-        <React.Fragment>
-            텍스트 요소 컴포넌트
-        </React.Fragment>
-    )
-}
+  const styles = {bold: bold, color: color, size: size, margin};
+  return (
+      <P {...styles}>
+          {children}
+      </P>
+  )
+};
+
+Text.defaultProps = {
+  children: null,
+  bold: false,
+  color: "#222831",
+  size: "14px",
+  margin: false,
+};
+
+const P = styled.p`
+  color: ${(props) => props.color};
+  font-size: ${(props) => props.size};
+  font-weight: ${(props) => (props.bold? "600" : "400")};
+  ${(props) => (props.margin? `margin: ${props.margin};` : '')}
+`;
 
 export default Text;
-

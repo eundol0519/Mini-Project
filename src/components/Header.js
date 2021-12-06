@@ -2,13 +2,47 @@
 
 // *** 패키지 import
 import React from "react";
+import { useHistory } from "react-router";
+
+import { Grid, Button, Text } from "../elements/index";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 
 const Header = (props) => {
-    return(
-        <React.Fragment>
-            헤더 중간 컴포넌트
-        </React.Fragment>
-    )
-}
+  const history = useHistory();
+  const [loginModal, setLoginModal] = React.useState(false);
+  const [signUpModal, setSignUpModal] = React.useState(false);
+
+  const loginModalOpen = () => {
+    setLoginModal(true);
+  };
+
+  const signUpModalOpen = () => {
+    setSignUpModal(true);
+  };
+
+  return (
+    <React.Fragment>
+      <Grid is_flex padding="4px 16px">
+        <Grid _onClick={() => history.push("/")}>
+          <Text margin="0px" size="24px" bold>
+            로고
+          </Text>
+        </Grid>
+
+        <Grid is_flex>
+          <Button _onClick={loginModalOpen}>로그인</Button>
+          {
+              loginModal && <Login modal={loginModal}></Login>
+          }
+          <Button _onClick={signUpModalOpen}>회원가입</Button>
+          {
+              signUpModal && <SignUp modal={signUpModal}></SignUp>
+          }
+        </Grid>
+      </Grid>
+    </React.Fragment>
+  );
+};
 
 export default Header;

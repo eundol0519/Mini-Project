@@ -3,8 +3,14 @@
 // *** 패키지 import
 import React from "react";
 
+import Header from "../components/Header";
+
 const Index = (props) => {
-  return <React.Fragment>메인 페이지</React.Fragment>;
+  return (
+    <React.Fragment>
+      <Header></Header>
+    </React.Fragment>
+  );
 };
 
 export default Index;
