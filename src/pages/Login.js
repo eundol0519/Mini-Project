@@ -24,6 +24,7 @@ const Login = (props) => {
   const login = () => {
     window.alert("로그인 성공 했습니다.");
     setModal(false);
+    // redux에 login을 dispatch 해야 함.
   };
 
   return (
