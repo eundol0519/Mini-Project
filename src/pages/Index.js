@@ -21,7 +21,7 @@ const Index = (props) => {
       <Header></Header>
       <Grid padding="1%">
         <Text size="2vw" bold>
-          익명 상담 플랫폼 ooo 사용 설명서
+          익명 상담 플랫폼 사용 설명서
         </Text>
         <Text>1. 로그인 후 이용 하실 수 있습니다.</Text>
         <Text>2. 상담 내용은 랜덤으로 제공 됩니다.</Text>
