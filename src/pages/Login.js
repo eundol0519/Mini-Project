@@ -9,6 +9,8 @@ import { actionCreators as userActions } from "../redux/modules/user.js";
 
 import { Grid, Button, Input, Text } from "../elements/index";
 import SignUp from "../pages/SignUp";
+import { useHistory } from "react-router";
+import axios from "axios";
 
 const Login = (props) => {
   const [id, setId] = React.useState(""); // 아이디
@@ -18,6 +20,7 @@ const Login = (props) => {
   const [signUpModal, setSignUpModal] = React.useState(false); // 로그인창인 지 회원가입 창인 지
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // disabled 체크
   const checkActive = () => {
@@ -26,9 +29,26 @@ const Login = (props) => {
 
   // 로그인 버튼 클릭 시
   const login = () => {
-    setModal(false);
-    props.setIsLogin(true)
-    dispatch(userActions.loginCheckFB())
+    axios({
+      method: "post",
+      url: "http://3.37.36.119/api/login",
+      data: {
+        username: "username",
+        password: "password",
+      }
+    })
+      .then((response) => {
+        // 성공 일 때 200 뜸
+        if (response.status === 200) {
+          window.alert("로그인 성공");
+          setModal(false);
+          props.setIsLogin(true);
+          history.push('/')
+        }
+      })
+      .catch((err) => {
+        console.log("회원가입 실패", err);
+      });
   };
 
   // 회원가입 버튼 클릭 시
@@ -61,8 +81,8 @@ const Login = (props) => {
           style={{
             // inLine Styles
             content: {
-              left: "30%",
-              right: "30%",
+              left: "32.5%",
+              right: "32.5%",
               botton: "10%",
             },
           }}
@@ -72,6 +92,7 @@ const Login = (props) => {
               로그인
             </Text>
             <Grid padding="16px 0px" height="20%">
+              {/* <form action="http://3.37.36.119/api/login" method="post"> */}
               <Input
                 type="text"
                 label="아이디"
@@ -92,18 +113,18 @@ const Login = (props) => {
                 }}
                 _onKeyUp={checkActive}
                 is_submit
-                onSubmit={login}
               ></Input>
 
               <Button
                 className={!active ? "activeBtn" : "unActiveBtn"}
                 width="18vw"
-                margin="1% 0px 3% 0px"
+                margin="3% 0px 3% 0px"
                 _onClick={login}
                 disabled={active}
               >
                 로그인
               </Button>
+              {/* </form> */}
               <Hr />
               <p>아직 회원이 아니시라면?</p>
               <Button width="18vw" margin="1% 0px 1% 0px" _onClick={join}>
