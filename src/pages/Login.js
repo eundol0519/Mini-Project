@@ -4,17 +4,20 @@
 import React from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user.js";
 
 import { Grid, Button, Input, Text } from "../elements/index";
 import SignUp from "../pages/SignUp";
 
 const Login = (props) => {
-
   const [id, setId] = React.useState(""); // 아이디
   const [pwd, setPwd] = React.useState(""); // 비밀번호
   const [modal, setModal] = React.useState(props.modal ? true : false); // 모달창이 열렸는 지 닫혔는 지
   const [active, setActive] = React.useState(true); // disabled가 활성화인 지 비활성화인 지
   const [signUpModal, setSignUpModal] = React.useState(false); // 로그인창인 지 회원가입 창인 지
+
+  const dispatch = useDispatch();
 
   // disabled 체크
   const checkActive = () => {
@@ -23,10 +26,11 @@ const Login = (props) => {
 
   // 로그인 버튼 클릭 시
   const login = () => {
-    window.alert("로그인 성공 했습니다.");
     setModal(false);
     props.setIsLogin(true); // 임시
+    window.alert("로그인 성공 했습니다.");
     // redux에 login을 dispatch 해야 함.
+    dispatch(userActions.loginFB(id, pwd));
   };
 
   // 회원가입 버튼 클릭 시
@@ -38,14 +42,18 @@ const Login = (props) => {
   const modalOff = () => {
     setModal(false);
     props.setLoginModal(false);
-  }
+  };
 
   return (
     <div>
       {signUpModal ? ( // 회원가입 버튼을 눌렀을 경우
-        <SignUp modal={signUpModal} setSignUpModal={props.setSignUpModal} setLoginModal={props.setLoginModal}></SignUp>
-        // 2번 경우처럼 로그인 -> 회원가입으로 이동하는 것이기 때문에 loginModal과 signUpModal을 보냅니다.
+        <SignUp
+          modal={signUpModal}
+          setSignUpModal={props.setSignUpModal}
+          setLoginModal={props.setLoginModal}
+        ></SignUp>
       ) : (
+        // 2번 경우처럼 로그인 -> 회원가입으로 이동하는 것이기 때문에 loginModal과 signUpModal을 보냅니다.
         // 누르지 않았을 경우
         <Modal
           isOpen={modal}

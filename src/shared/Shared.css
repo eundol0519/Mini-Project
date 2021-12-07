@@ -1,5 +1,4 @@
 .scroll {
-  height : 600px;
   overflow: scroll;
   /* IE scroll 숨김 */
   -ms-overflow-style: none;

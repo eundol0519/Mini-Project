@@ -15,7 +15,7 @@ const Index = (props) => {
   const history = useHistory();
 
   return (
-    <div className="scroll">
+    <div>
       <Header></Header>
       <Grid padding="1%">
         <Text size="2vw" bold>

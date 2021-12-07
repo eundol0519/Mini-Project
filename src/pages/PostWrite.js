@@ -3,8 +3,14 @@
 // *** 패키지 import
 import React from "react";
 
+import Header from "../components/Header";
+
 const PostWrite = (props) => {
-  return <React.Fragment>게시물 작성 페이지</React.Fragment>;
+  return (
+    <React.Fragment>
+      <Header></Header>
+    </React.Fragment>
+  );
 };
 
 export default PostWrite;

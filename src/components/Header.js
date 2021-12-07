@@ -3,17 +3,20 @@
 // *** 패키지 import
 import React from "react";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 
 import { Grid, Button, Text } from "../elements/index";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 
 const Header = (props) => {
+
   const history = useHistory();
+  const is_login = useSelector((state) => state.user.is_login);
+
   const [loginModal, setLoginModal] = React.useState(false);
   const [signUpModal, setSignUpModal] = React.useState(false);
-  const [isLogin, setIsLogin] = React.useState(true);
-  // 리덕스에서 가져온 값을 기본값으르 담아둬야 함
+  const [isLogin, setIsLogin] = React.useState(is_login);
 
   const loginModalOpen = () => {
     setLoginModal(true);
