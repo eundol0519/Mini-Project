@@ -11,7 +11,19 @@ import Header from "../components/Header";
 
 const PostWrite = (props) => {
   const history = useHistory();
-  const is_cookie = getCookie('is_login')
+  const is_cookie = getCookie("is_login");
+
+  const [title, setTitle] = React.useState("");
+  const [contents, setContents] = React.useState("");
+  const [active, setActive] = React.useState(true);
+
+  const checkActive = () => {
+    title !== "" && contents !== "" ? setActive(false) : setActive(true);
+  };
+
+  const write = () => {
+    window.alert("게시물 작성이 완료 되었습니다!");
+  };
 
   if (!is_cookie) {
     return (
@@ -35,15 +47,34 @@ const PostWrite = (props) => {
     <React.Fragment>
       <Header></Header>
       <Grid margin="10% 0px 0px 0px">
-        <Input label="제목" placeholder="제목을 입력 해주세요"></Input>
         <Input
-          label="내용"
-          placeholder="내용을 입력 해주세요"
-          multiLine
+          label="제목"
+          value={title}
+          placeholder="제목을 입력 해주세요"
+          _onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+          _onKeyUp={checkActive}
         ></Input>
+        <Input
+          label="게시글 내용"
+          value={contents}
+          placeholder="내용을 작성 해주세요"
+          multiLine
+          _onChange={(e) => {
+            setContents(e.target.value);
+          }}
+          _onKeyUp={checkActive}
+        />
       </Grid>
       <Grid is_flex margin="40px 0px 40px 0px" center>
-        <Button width="20vw" margin="0px 0px 0px 28%">
+        <Button
+          width="20vw"
+          margin="0px 0px 0px 28%"
+          className={!active ? "activeBtn" : "unActiveBtn"}
+          disabled={active}
+          _onClick={write}
+        >
           작성
         </Button>
         <Button

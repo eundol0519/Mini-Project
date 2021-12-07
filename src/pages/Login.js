@@ -26,9 +26,9 @@ const Login = (props) => {
 
   // 로그인 버튼 클릭 시
   const login = () => {
-    dispatch(userActions.loginFB(id, pwd));
     setModal(false);
     props.setIsLogin(true)
+    dispatch(userActions.loginCheckFB())
   };
 
   // 회원가입 버튼 클릭 시

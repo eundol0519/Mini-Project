@@ -13,9 +13,11 @@ import SignUp from "../pages/SignUp";
 import { getCookie } from "../shared/Cookie";
 
 const Header = (props) => {
+
   const history = useHistory();
   const dispatch = useDispatch();
   const is_cookie = getCookie("is_login");
+  // const is_session = sessionStorage.getItem("세션 이름") ? true : false;
 
   const [loginModal, setLoginModal] = React.useState(false);
   const [signUpModal, setSignUpModal] = React.useState(false);

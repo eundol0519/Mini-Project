@@ -13,7 +13,6 @@ const IS_LOGIN = "IS_LOGIN";
 
 // *** 액션 생성 함수
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
-const loginCheck = createAction(IS_LOGIN, () => {});
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (is_login, username) => ({
   is_login,
@@ -50,7 +49,6 @@ const loginCheckFB = () => {
     const is_login = true;
     const username = user.username;
     dispatch(setUser(is_login, username));
-    window.location.href = "/";
     console.log("로그인 여부 확인 성공");
   };
 };
@@ -74,7 +72,6 @@ const loginFB = (username, password) => {
 
     const is_login = true;
     dispatch(setUser({ is_login, username }));
-    window.location.href = "/";
   };
 };
 
@@ -92,7 +89,6 @@ const logoutFB = () => {
     //   });
 
     dispatch(logOut());
-    window.location.href = "/"
     console.log("로그아웃 성공");
   };
 };

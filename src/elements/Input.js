@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Text, Grid } from "./index";
 
 const Input = (props) => {
+  
   const {
     label,
     placeholder,
@@ -24,6 +25,7 @@ const Input = (props) => {
           rows={10}
           value={value}
           placeholder={placeholder}
+          onKeyUp={_onKeyUp}
           onChange={_onChange}
         ></ElTextarea>
       </Grid>
@@ -61,24 +63,25 @@ const Input = (props) => {
 };
 
 Input.defaultProps = {
-  multiLine: false,
   label: false,
   placeholder: "텍스트를 입력해주세요.",
   type: "text",
   value: "",
+  multiLine: false,
   is_submit: false,
   onSubmit: () => {},
   _onChange: () => {},
 };
 
-const ElTextarea = styled.textarea`
+const ElInput = styled.input`
   border: 1px solid #212121;
   width: 60%;
+  ${(props) => (props.height ? `height : ${props.height};` : "")}
   padding: 12px 4px;
   box-sizing: border-box;
 `;
 
-const ElInput = styled.input`
+const ElTextarea = styled.textarea`
   border: 1px solid #212121;
   width: 60%;
   padding: 12px 4px;
