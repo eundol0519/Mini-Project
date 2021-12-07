@@ -13,10 +13,9 @@ import SignUp from "../pages/SignUp";
 import { getCookie } from "../shared/Cookie";
 
 const Header = (props) => {
-
   const history = useHistory();
   const dispatch = useDispatch();
-  const is_cookie = getCookie('is_login')
+  const is_cookie = getCookie("is_login");
 
   const [loginModal, setLoginModal] = React.useState(false);
   const [signUpModal, setSignUpModal] = React.useState(false);
@@ -31,7 +30,7 @@ const Header = (props) => {
   };
 
   const logOut = () => {
-    dispatch(userActions.logoutFB())
+    dispatch(userActions.logoutFB());
     setIsLogin(false);
     window.alert("로그아웃 하셨습니다.");
   };
@@ -40,7 +39,7 @@ const Header = (props) => {
     return (
       <React.Fragment>
         <Grid is_flex padding="4px 16px">
-          <Grid _onClick={() => history.push("/")}>
+          <Grid _onClick={() => (window.location.href = "/")}>
             <Text margin="0px" size="24px" bold>
               로고
             </Text>
@@ -65,7 +64,7 @@ const Header = (props) => {
   return (
     <div style={{ overflow: "hidden" }}>
       <Grid is_flex padding="4px 16px">
-        <Grid _onClick={() => history.push("/")}>
+        <Grid _onClick={() => (window.location.href = "/")}>
           <Text margin="0px" size="24px" bold>
             로고
           </Text>

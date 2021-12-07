@@ -50,6 +50,7 @@ const loginCheckFB = () => {
     const is_login = true;
     const username = user.username;
     dispatch(setUser(is_login, username));
+    window.location.href = "/";
     console.log("로그인 여부 확인 성공");
   };
 };
@@ -73,6 +74,7 @@ const loginFB = (username, password) => {
 
     const is_login = true;
     dispatch(setUser({ is_login, username }));
+    window.location.href = "/";
   };
 };
 
@@ -90,6 +92,7 @@ const logoutFB = () => {
     //   });
 
     dispatch(logOut());
+    window.location.href = "/"
     console.log("로그아웃 성공");
   };
 };

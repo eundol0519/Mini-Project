@@ -8,7 +8,6 @@ import Header from "../components/Header";
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
-
 import { getCookie } from "../shared/Cookie";
 
 const Index = (props) => {
