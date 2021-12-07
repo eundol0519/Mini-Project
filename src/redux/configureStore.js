@@ -18,9 +18,6 @@ export const history = createBrowserHistory();
 // *** rootReducer 만들기
 const rootReducer = combineReducers({
     user : User,
-    post : Post,
-    feed : Feed,
-    comment : Comment,
     router : connectRouter(history),
 })
 
