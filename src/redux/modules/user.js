@@ -16,6 +16,7 @@ const setUser = createAction(SET_USER, (username, password) => ({
   username,
   password,
 }));
+const loginCheck = createAction(IS_LOGIN, (is_login) => ({ is_login }));
 
 // *** 초기값
 const initialState = {
@@ -25,6 +26,22 @@ const initialState = {
 };
 
 // *** 미들웨어
+
+// *** 로그인 확인
+const loginCheckFB = () => {
+  return function (dispatch, getState, { history }) {
+    // axios.get("/api/islogin").then((response) => {
+    //   if (response) {
+    //     const is_login = true;
+    //     dispatch(loginCheck(is_login));
+    //   }
+    // }).catch((err)=>{
+    //   console.log("로그인 여부 확인 실패");
+    // })
+    const is_login = true;
+    dispatch(loginCheck(is_login));
+  };
+};
 
 // *** 로그인 처리
 const loginFB = (username, password) => {
@@ -51,6 +68,11 @@ const loginFB = (username, password) => {
 // *** 리듀서
 export default handleActions(
   {
+    [IS_LOGIN]: (state, action) => {
+      produce(state, (draft) => {
+        draft.is_login = true;
+      });
+    },
     [SET_USER]: (state, action) => {
       produce(state, (draft) => {
         draft.is_login = true;
@@ -71,6 +93,7 @@ export default handleActions(
 // *** 액션 생성 함수 export
 const actionCreators = {
   loginFB,
+  loginCheckFB,
 };
 
 export { actionCreators };

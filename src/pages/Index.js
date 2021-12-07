@@ -8,10 +8,11 @@ import Header from "../components/Header";
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 
 const Index = (props) => {
 
-  const [is_login, setIsLogin] = React.useState(true); // 임시
+  const [isLogin, setIsLogin] = React.useState(true); // 임시
   const history = useHistory();
 
   return (
@@ -26,7 +27,7 @@ const Index = (props) => {
         <Text>3. 한번 넘어간 상담은 다시는 보실 수 없습니다.</Text>
         <Text>4. 모든 서비스는 익명으로 이뤄집니다.</Text>
         <Img src={mainImage} alt="이미지"></Img>
-        {is_login ? (
+        {isLogin ? (
           <Grid is_flex margin="40px 0px 40px 0px" center>
             <Button
               width="20vw"
