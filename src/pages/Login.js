@@ -26,11 +26,9 @@ const Login = (props) => {
 
   // 로그인 버튼 클릭 시
   const login = () => {
-    setModal(false);
-    props.setIsLogin(true); // 임시
-    window.alert("로그인 성공 했습니다.");
-    // redux에 login을 dispatch 해야 함.
     dispatch(userActions.loginFB(id, pwd));
+    setModal(false);
+    props.setIsLogin(true)
   };
 
   // 회원가입 버튼 클릭 시

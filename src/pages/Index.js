@@ -8,12 +8,14 @@ import Header from "../components/Header";
 import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
+
+import { getCookie } from "../shared/Cookie";
 
 const Index = (props) => {
 
-  const [isLogin, setIsLogin] = React.useState(true); // 임시
   const history = useHistory();
+  const is_cookie = getCookie('is_login')
+  const [isLogin, setIsLogin] = React.useState(is_cookie);
 
   return (
     <div>
