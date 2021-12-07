@@ -5,9 +5,10 @@ import React, { useState } from "react";
 
 import { Grid, Button, Text, Input } from "../elements/index";
 import Header from "../components/Header";
+import CommentList from "../components/CommentList";
+import CommentWrite from "../components/CommentWrite";
 
 const PostDetail = (props) => {
-
   const [myPost, setMyPost] = useState(true);
 
   return (
@@ -19,12 +20,11 @@ const PostDetail = (props) => {
       <Grid margin="5% 0px 5% 0px">
         <Text>게시물 내용입니다.</Text>
       </Grid>
+      <Grid margin="0px 0px 0px 0px">
+        <CommentWrite></CommentWrite>
+      </Grid>
       <Grid margin="0px 0px 5% 0px">
-        <Input placeholder="댓글을 입력 해주세요"></Input>
-        <Text>댓글 목록</Text>
-        <Text>댓글 목록</Text>
-        <Text>댓글 목록</Text>
-        <Text>댓글 목록</Text>
+        <CommentList></CommentList>
       </Grid>
       <Grid is_flex center>
         {myPost ? (
