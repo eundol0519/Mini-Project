@@ -39,8 +39,8 @@ const Header = (props) => {
       <React.Fragment>
         <Grid is_flex padding="4px 16px">
           <Grid _onClick={() => (history.push('/'))}>
-            <Text margin="0px" size="24px" bold>
-              로고
+            <Text margin="0px" size="20px" bold>
+              익명의멘탈케어
             </Text>
           </Grid>
 

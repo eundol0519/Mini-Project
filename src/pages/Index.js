@@ -7,8 +7,9 @@ import Header from "../components/Header";
 
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router";
-import { getCookie } from "../shared/Cookie";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
 
 const Index = (props) => {
 
@@ -22,7 +23,7 @@ const Index = (props) => {
       <Header></Header>
       <Grid padding="1%">
         <Text size="2vw" bold>
-          익명 상담 플랫폼 ooo 사용 설명서
+          익명의 멘탈 케어 사용 설명서
         </Text>
         <Text>1. 로그인 후 이용 하실 수 있습니다.</Text>
         <Text>2. 상담 내용은 랜덤으로 제공 됩니다.</Text>
@@ -43,9 +44,7 @@ const Index = (props) => {
             <Button
               width="20vw"
               margin="0px 28% 0px 0px"
-              _onClick={() => {
-                history.push("/postDetail");
-              }}
+              _onClick={()=>{history.push('/post')}}
             >
               상담하기
             </Button>

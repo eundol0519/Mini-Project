@@ -129,7 +129,7 @@ const SignUp = (props) => {
         }}
       >
         <Grid padding="16px" center>
-          <Text size="3vw" margin="6vh" bold>
+          <Text size="3vw" bold>
             회원가입
           </Text>
           <Grid padding="16px 0px" height="20%">

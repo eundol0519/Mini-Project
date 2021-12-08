@@ -5,26 +5,30 @@ import { actionCreators as commentActions } from "../redux/modules/comment";
 import { useDispatch, useSelector } from "react-redux";
 
 const CommentWrite = (props) => {
-  const [comment_text, setCommentText] = React.useState();
+  const postId = useSelector((state) => state.post.postId);
+  const [comment, setComment] = React.useState();
   const dispatch = useDispatch();
-  const { post_id } = props;
 
   const onChange = (e) => {
-    setCommentText(e.target.value);
+    setComment(e.target.value);
   };
 
   const write = () => {
-    dispatch(commentActions.addCommentFB(post_id, comment_text));
-    setCommentText(""); // 댓글을 입력하면 input의 value를 날려준다.
+    if (comment == undefined || comment === "") {
+      window.alert("댓글을 입력 해주세요");
+      return;
+    }
+    dispatch(commentActions.addCommentFB(postId, comment));
+    setComment(""); // 댓글을 입력하면 input의 value를 날려준다.
   };
 
   return (
     <React.Fragment>
-      <Grid padding="16px" width="70%" margin="auto" commentWrite>
+      <Grid padding="16px" width="70%" margin="auto">
         <Input
           placeholder="댓글 내용을 입력해주세요 :)"
           _onChange={onChange}
-          value={comment_text}
+          value={comment}
           onSubmit={write}
           is_submit
         />
