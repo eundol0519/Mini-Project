@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Text, Grid } from "./index";
 
 const Input = (props) => {
-  
   const {
     label,
     placeholder,
@@ -19,7 +18,7 @@ const Input = (props) => {
 
   if (multiLine) {
     return (
-      <Grid>
+      <>
         {label && <Text margin="0px">{label}</Text>}
         <ElTextarea
           rows={10}
@@ -28,13 +27,13 @@ const Input = (props) => {
           onKeyUp={_onKeyUp}
           onChange={_onChange}
         ></ElTextarea>
-      </Grid>
+      </>
     );
   }
 
   return (
     <React.Fragment>
-      <Grid>
+      <>
         {label && <Text margin="0px">{label}</Text>}
         {is_submit ? (
           <ElInput
@@ -57,7 +56,7 @@ const Input = (props) => {
             onKeyUp={_onKeyUp}
           />
         )}
-      </Grid>
+      </>
     </React.Fragment>
   );
 };
@@ -71,6 +70,7 @@ Input.defaultProps = {
   is_submit: false,
   onSubmit: () => {},
   _onChange: () => {},
+  _onBlur: () => {},
 };
 
 const ElInput = styled.input`

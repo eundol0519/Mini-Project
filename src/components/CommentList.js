@@ -17,7 +17,7 @@ const CommentItem = (props) => {
   const { post_id, contents, insert_dt } = props;
   return (
     <React.Fragment>
-      <Grid is_flex>
+      <Grid is_flex margin="auto" width="70%">
         <Grid>
           <Text bold>익명</Text>
         </Grid>

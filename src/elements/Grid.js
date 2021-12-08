@@ -7,6 +7,7 @@ import styled from "styled-components";
 const Grid = (props) => {
   const {
     is_flex,
+    commentWrite,
     width,
     height,
     margin,
@@ -20,6 +21,7 @@ const Grid = (props) => {
 
   const styles = {
     is_flex: is_flex,
+    commentWrite : commentWrite,
     width: width,
     margin: margin,
     height: height,
@@ -40,6 +42,7 @@ const Grid = (props) => {
 Grid.defaultProps = {
   chidren: null,
   is_flex: false,
+  commentWrite : false,
   width: "100%",
   height: "100%",
   padding: false,
@@ -60,6 +63,10 @@ const GridBox = styled.div`
     ${(props) =>
     props.is_flex
       ? `display: flex; align-items: center; justify-content: space-evenly; `
+      : ""}
+    ${(props) =>
+    props.commentWrite
+      ? `display: flex; align-items: center; justify-content: center;`
       : ""}
     ${(props) => (props.center ? `text-align: center;` : "")}
     ${(props) => (props.flexFlow ? "flex-flow : row wrap;" : "")}
