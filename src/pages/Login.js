@@ -9,8 +9,6 @@ import { actionCreators as userActions } from "../redux/modules/user";
 
 import { Grid, Button, Input, Text } from "../elements/index";
 import SignUp from "../pages/SignUp";
-import { useHistory } from "react-router";
-import axios from "axios";
 
 const Login = (props) => {
   const [username, setId] = React.useState(""); // 아이디
@@ -28,7 +26,7 @@ const Login = (props) => {
 
   // 로그인 버튼 클릭 시
   const login = () => {
-    dispatch(userActions.loginFB(username, password))
+    dispatch(userActions.loginFB(username, password));
     setModal(false);
     props.setLoginModal(false);
     props.setSignUpModal(false);
@@ -76,39 +74,39 @@ const Login = (props) => {
               로그인
             </Text>
             <Grid padding="16px 0px" height="20%">
-              {/* <form action="http://3.37.36.119/api/login" method="post"> */}
-              <Input
-                type="text"
-                label="아이디"
-                placeholder="아이디를 입력 해주세요"
-                value={username}
-                _onChange={(e) => {
-                  setId(e.target.value);
-                }}
-                _onKeyUp={checkActive}
-              ></Input>
-              <Input
-                type="password"
-                label="비밀번호"
-                placeholder="비밀번호를 입력 해주세요"
-                value={password}
-                _onChange={(e) => {
-                  setPwd(e.target.value);
-                }}
-                _onKeyUp={checkActive}
-                is_submit
-              ></Input>
-
+              <Grid margin="0px 0px 2% 0px">
+                <Input
+                  type="text"
+                  placeholder="아이디를 입력 해주세요"
+                  value={username}
+                  _onChange={(e) => {
+                    setId(e.target.value);
+                  }}
+                  _onKeyUp={checkActive}
+                ></Input>
+              </Grid>
+              <Grid>
+                <Input
+                  type="password"
+                  placeholder="비밀번호를 입력 해주세요"
+                  value={password}
+                  _onChange={(e) => {
+                    setPwd(e.target.value);
+                  }}
+                  _onKeyUp={checkActive}
+                  is_submit
+                ></Input>
+              </Grid>
+              <br />
               <Button
                 className={!active ? "activeBtn" : "unActiveBtn"}
                 width="18vw"
-                margin="3% 0px 3% 0px"
+                margin="1% 0px 1% 0px"
                 _onClick={login}
                 disabled={active}
               >
                 로그인
               </Button>
-              {/* </form> */}
               <Hr />
               <p>아직 회원이 아니시라면?</p>
               <Button width="18vw" margin="1% 0px 1% 0px" _onClick={join}>

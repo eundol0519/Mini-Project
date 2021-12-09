@@ -12,11 +12,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const Index = (props) => {
-
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const user_token = localStorage.getItem("user_token") ? true : false;
   const [isLogin, setIsLogin] = React.useState(user_token);
+
+  const viewPost = () => {
+    dispatch(postActions.randomPostFB())
+  }
 
   return (
     <div>
@@ -44,7 +48,7 @@ const Index = (props) => {
             <Button
               width="20vw"
               margin="0px 28% 0px 0px"
-              _onClick={()=>{history.push('/post')}}
+              _onClick={viewPost}
             >
               상담하기
             </Button>

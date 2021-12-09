@@ -10,10 +10,8 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import Header from "../components/Header";
 import CommentList from "../components/CommentList";
 import CommentWrite from "../components/CommentWrite";
-import axios from "axios";
 
 const PostDetail = (props) => {
-  
   const history = useHistory();
   const dispatch = useDispatch();
   const user_token = localStorage.getItem("user_token") ? true : false;
@@ -22,12 +20,21 @@ const PostDetail = (props) => {
   const postInfo = useSelector((state) => state.post);
 
   React.useEffect(() => {
-    if (!postInfo && !params.postId) { // 내가 작성한 게시물이 아니면서 게시물 정보가 없을 경우
+
+    // 랜덤한 게시물일 경우
+    if (!params.postId && !postInfo.postId) {
       // 랜덤한 정보를 서버에 요청
       dispatch(postActions.randomPostFB());
-      console.log("정보 없음");
     }
-  });
+
+    // 내 게시물일 경우
+    if (params.postId) {
+      dispatch(postActions.myPostFB(params.postId));
+    }
+
+    // 내가 댓글을 단 게시물을 보는 경우
+    // postInfo가 있을 때 해당하는 거라서 따로 처리 안함
+  }, []);
 
   // 넘어가기 버튼 클릭 시 다음 게시물 요청하기
   const nextPost = () => {
@@ -46,9 +53,9 @@ const PostDetail = (props) => {
     const deleteCheck = window.confirm("게시물을 삭제 하시겠습니까?");
 
     if (deleteCheck) {
-      dispatch(postActions.deletePostFB(postInfo.postId));
-      window.alert("게시물이 삭제 되었습니다.")
-      history.replace('/')
+      dispatch(postActions.deletePostDB(params.postId));
+      window.alert("게시물이 삭제 되었습니다.");
+      history.replace("/");
     }
   };
 
@@ -62,36 +69,27 @@ const PostDetail = (props) => {
     return (
       <React.Fragment>
         <Header></Header>
-        <Grid margin="5% 0px 2% 0px">
+        <Grid margin="6% 0px 1% 0px">
           <Grid>
-            {postInfo.image ? (
-              <img src={postInfo.image} alt="게시물 사진" width="50%"></img>
-            ) : (
+            {postInfo.imageUrl && (
               <img
-                src="https://img.insight.co.kr/static/2021/01/10/700/img_20210110130830_kue82l80.webp"
+                src={`http://3.37.36.119${postInfo.imageUrl}`}
                 alt="게시물 사진"
                 width="50%"
               ></img>
             )}
           </Grid>
           <Grid margin="2% 0px 0px 0px">
-            <Text
-              border="1px solid"
-              margin="auto"
-              size="1em"
-              width="50%"
-              height="10vh"
-            >
+            <Text margin="auto" size="1em" width="40%" height="10vh">
               {postInfo.title}
             </Text>
             <Text
-              border="1px solid"
               margin="auto"
               size="1em"
-              width="50%"
-              height="50vh"
+              width="40%"
+              padding="3%"
             >
-              {postInfo.contents}
+              {postInfo.content}
             </Text>
           </Grid>
         </Grid>
@@ -123,36 +121,27 @@ const PostDetail = (props) => {
     // 랜덤한 게시물일 경우
     <React.Fragment>
       <Header></Header>
-      <Grid margin="5% 0px 2% 0px">
+      <Grid margin="10% 0px 2% 0px">
         <Grid>
-          {postInfo.image ? (
-            <img src={postInfo.image} alt="게시물 사진" width="50%"></img>
-          ) : (
+          {postInfo.imageUrl && (
             <img
-              src="https://img.insight.co.kr/static/2021/01/10/700/img_20210110130830_kue82l80.webp"
+              src={`http://3.37.36.119${postInfo.imageUrl}`}
               alt="게시물 사진"
               width="50%"
             ></img>
           )}
         </Grid>
         <Grid margin="2% 0px 0px 0px">
-          <Text
-            border="1px solid"
-            margin="auto"
-            size="1em"
-            width="50%"
-            height="10vh"
-          >
+          <Text margin="auto" size="1em" width="40%" height="10vh">
             {postInfo.title}
           </Text>
           <Text
-            border="1px solid"
             margin="auto"
             size="1em"
-            width="50%"
-            height="50vh"
+            width="40%"
+            height="15vh"
           >
-            {postInfo.contents}
+            {postInfo.content}
           </Text>
         </Grid>
       </Grid>

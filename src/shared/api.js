@@ -14,9 +14,8 @@ const instance = axios.create({
 // interceptors의 역할 => then이나 catch로 처리되기 전
 // 요청(request)이나 응답(response)을 가로채 어떠한 작업을 수행할 수 있게 한다. 참고 (https://yamoo9.github.io/axios/guide/interceptors.html)
 instance.interceptors.request.use(function (config) {
-  const accessToken = document.cookie.split("=")[1]; // 쿠키는 name = value 형식으로 저장되는데 value 값 가져오기
+  const accessToken = localStorage.user_token; // 우리는 로컬스토리지에 저장하기로 했음!
   config.headers.common["X-AUTH-TOKEN"] = `${accessToken}`; // header에 토큰값을 넣는다 => header에 토큰값이 있어 앞으로 request를 자유자재로 할 수 있다.
-  // "X-AUTH-TOKEN" << 이 부분을 바꿔줘야 할 수도 있음 뭔지 이해를 못함..
   return config;
 });
 
@@ -33,14 +32,38 @@ instance.interceptors.request.use(function (config) {
 export const apis = {
   // user
   login: (username, password) =>
-    instance.post(
-      "/user/login",
-      { username: username, password: password }
-    ),
+    instance.post("/user/login", { username: username, password: password }),
   signup: (username, password, passwordCheck) =>
     instance.post("/api/signup", {
       username: username,
       password: password,
       passwordCheck: passwordCheck,
     }),
+  islogin: (username) =>
+    instance.get("/api/islogin", {
+      userInfo: {
+        username: username,
+      },
+    }),
+
+  // 게시글 - post
+  addPost: (title, content) =>
+    instance.post("/api/posts", {
+      title: title,
+      content: content,
+    }),
+  editPost: (postId, content) => instance.put(`/api/posts/${postId}`, content),
+  deletePost: (postId) => instance.put(`/api/posts/${postId}`),
+
+  // 랜덤 게시글 조회 get
+
+  // 내가 작성한 게시글 조회 get
+
+  // 내가 댓글을 작성한 글 조회 get
+
+  // 댓글 작성 post
+
+  // 피드 페이지 get
+
+  // 아이디 중복 검사post,, 로그아웃get 필요한가?
 };

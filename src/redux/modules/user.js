@@ -1,7 +1,6 @@
 // *** 패키지 import
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 import { apis } from "../../shared/api";
 
 import axios from "axios";
@@ -31,19 +30,23 @@ const initialState = {
 const loginCheckFB = () => {
   return function (dispatch, getState, { history }) {
 
-    console.log("로그인 여부 확인")
-    // axios
-    //   .get("http://3.37.36.119/api/islogin")
-    //   .then((response) => {
-        
-    //     const is_login = true; // 로그인 상태
-    //     const username = response.userInfo.username // 사용자 정보
+    console.log("로그인 여부 확인");
+    const token = localStorage.getItem("user_token");
 
-    //     dispatch(setUser(is_login, username))
-    //   })
-    //   .catch((err) => {
-    //     console.log("로그인 여부 확인 실패", err);
-    //   });
+    axios
+      .get("http://3.37.36.119/api/islogin", {
+        headers: { Authorization: token },
+      })
+      .then((response) => {
+        const is_login = true; // 로그인 상태
+        const username = response.data.userInfo.username; // 사용자 정보
+        localStorage.setItem('username', username)
+
+        dispatch(setUser(is_login, username));
+      })
+      .catch((err) => {
+        console.log("로그인 여부 확인 실패", err);
+      });
   };
 };
 
@@ -57,13 +60,13 @@ const loginFB = (username, password) => {
       })
       .then((response) => {
         const user_token = response.headers.authorization;
-        localStorage.setItem("user_token", user_token);
-        window.alert("로그인 되셨습니다.")
-        window.location.reload()
+        localStorage.setItem('user_token', user_token)
+        window.alert("로그인 되셨습니다.");
+        window.location.reload();
       })
       .catch((err) => {
         console.log("로그인 요청 실패", err);
-        window.alert("아이디/비밀번호를 확인 해주세요")
+        window.alert("아이디/비밀번호를 확인 해주세요");
       });
   };
 };
@@ -76,7 +79,7 @@ const logoutFB = () => {
       .then((reponse) => {
         dispatch(logOut());
         console.log("로그아웃 성공");
-        window.location.reload()
+        window.location.reload();
       })
       .catch((err) => {
         console.log("로그아웃 실패");
@@ -90,7 +93,7 @@ const signUpDB = (username, password, passwordCheck) => {
     apis
       .signup(username, password, passwordCheck)
       .then((res) => {
-        window.alert("회원가입 되셨습니다.")
+        window.alert("회원가입 되셨습니다.");
       })
       .catch((err) => {
         window.alert("이미 존재하는 아이디 또는 이메일입니다.");
@@ -103,14 +106,12 @@ export default handleActions(
   {
     [SET_USER]: (state, action) => {
       produce(state, (draft) => {
-        setCookie("is_login", "success");
         draft.is_login = action.payload.is_login;
         draft.username = action.payload.username;
       });
     },
     [LOG_OUT]: (state, action) => {
       produce(state, (draft) => {
-        deleteCookie("is_login");
         draft.username = null;
         draft.is_login = false;
       });

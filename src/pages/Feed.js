@@ -19,22 +19,21 @@ const Feed = (props) => {
   const feedInfo = useSelector((state) => state.feed);
 
   React.useEffect(() => {
-    if (!feedInfo) {
-      dispatch(feedActions.getFeedFB());
-    }
-  });
+    dispatch(feedActions.getFeedFB());
+  }, []);
 
   // 게시물을 눌렀을 때 해당 게시물로 이동
-  const postDetail = (postId)=>{
-    console.log('게시물 페이지 이동')
-    dispatch(postActions.myPostFB(postId))
-  }
+  const postDetail = (postId) => {
+    console.log("게시물 페이지 이동");
+    history.push("/post/" + postId);
+  };
 
   // 댓글 눌렀을 때 해당 게시물로 이동
-  const commentDetail = (commentId)=>{
-    console.log('댓글 페이지 이동')
-    dispatch(postActions.myCommentFB(commentId))
-  }
+  const commentDetail = (commentId) => {
+    console.log("댓글 페이지 이동");
+    dispatch(postActions.myCommentFB(commentId));
+    history.push('/post')
+  };
 
   if (!user_token) {
     window.alert("로그인 후 이용 가능합니다.");
@@ -56,7 +55,15 @@ const Feed = (props) => {
           justifyContent="flex-start"
         >
           {feedInfo.myPosts.map((p) => {
-            return <Post _onClick={()=>{postDetail(p.postId)}} key={p.postId} {...p}></Post>;
+            return (
+              <Post
+                _onClick={() => {
+                  postDetail(p.postId);
+                }}
+                key={p.postId}
+                {...p}
+              ></Post>
+            );
           })}
         </Grid>
       </Grid>
@@ -64,9 +71,18 @@ const Feed = (props) => {
         <Text size="1.5em" bold>
           내가 답변한 글
         </Text>
-        <Grid is_flex padding="10px" width="auto" flexFlow>
+        <Grid is_flex padding="10px" width="auto" justifyContent>
           {feedInfo.myComments.map((c) => {
-            return <Post noWrap _onClick={()=>{commentDetail(c.commentId)}} key={c.commentId} {...c}></Post>;
+            return (
+              <Post
+                noWrap
+                _onClick={() => {
+                  commentDetail(c.commentId);
+                }}
+                key={c.commentId}
+                {...c}
+              ></Post>
+            );
           })}
         </Grid>
       </Grid>

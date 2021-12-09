@@ -11,7 +11,6 @@ import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 
 const Header = (props) => {
-
   const history = useHistory();
   const dispatch = useDispatch();
   const user_token = localStorage.getItem("user_token") ? true : false;
@@ -29,16 +28,16 @@ const Header = (props) => {
 
   const logOut = () => {
     dispatch(userActions.logoutFB());
-    localStorage.removeItem("user_token")
+    localStorage.removeItem("user_token");
     window.alert("로그아웃 하셨습니다.");
-    window.location.reload() // ★ 임시
+    window.location.reload();
   };
 
   if (user_token) {
     return (
       <React.Fragment>
         <Grid is_flex padding="4px 16px">
-          <Grid _onClick={() => (history.push('/'))}>
+          <Grid _onClick={() => (window.location.href = "/")}>
             <Text margin="0px" size="20px" bold>
               익명의멘탈케어
             </Text>
@@ -65,7 +64,7 @@ const Header = (props) => {
       <Grid is_flex padding="4px 16px">
         <Grid _onClick={() => (window.location.href = "/")}>
           <Text margin="0px" size="24px" bold>
-            로고
+            익명의멘탈케어
           </Text>
         </Grid>
 

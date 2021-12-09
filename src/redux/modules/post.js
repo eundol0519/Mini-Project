@@ -1,93 +1,185 @@
 // *** 패키지 import
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import moment from "moment";
+import "moment";
 import axios from "axios";
 
 // *** 액션 타입
 const GET_POST = "GET_POST";
 const SET_POST = "SET_POST";
+const EDIT_POST = "EDIT_POST";
+const ADD_COMMENT = "ADD_COMMENT";
 
 // *** 액션 생성 함수
-const setPost = createAction(SET_POST, (post) => ({ post }));
-const getPost = createAction(GET_POST, (post) => ({ post }));
+const setPost = createAction(SET_POST, (postList) => ({ postList }));
+const getPost = createAction(GET_POST, (postList) => ({ postList }));
+const editpost = createAction(EDIT_POST, (postId, post) => ({ postId, post }));
+const addComment = createAction(ADD_COMMENT, (commentList) => ({
+  commentList,
+}));
 
 // *** 초기값
 const initialState = {
-  postId: 1,
-  title: "강아지가 너무 귀엽다",
-  contents: "우리집 강아지가 너무 귀여워서 고민이다.",
-  image: null,
+  postId: null,
+  title: null,
+  content: null,
+  imageUrl: null,
   comments: [
     {
-      commentId: 1,
-      comment: "댓글 내용 1",
-      createdAt: "2021-12-09",
-    },
-    {
-      commentId: 2,
-      comment: "댓글 내용 2",
-      createdAt: "2021-12-01",
-    },
-    {
-      commentId: 3,
-      comment: "댓글 내용 3",
-      createdAt: "2021-12-02",
+      commentId: null,
+      comment: null,
+      createdAt: null,
     },
   ],
 };
 
 // *** 미들웨어
+
+// 랜덤 게시물 조회
 const randomPostFB = () => {
   return function (dispatch, getState, { history }) {
-    console.log("게시물 조회");
-    // axios
-    //   .get("http://3.37.36.119/api/posts")
-    //   .then((response) => {
-    //     dispatch(getPost(response));
-    //     console.log("게시물 조회 성공");
-    //   })
-    //   .catch((err) => {
-    //     console.log("게시물 조회 실패", err);
-    //   });
+    const token = localStorage.getItem("user_token");
+
+    axios
+      .get("http://3.37.36.119/api/posts", {
+        headers: { Authorization: token },
+      })
+      .then((response) => {
+        if (response.data === "") {
+          window.alert("게시물이 없습니다.");
+          history.replace("/");
+          return;
+        }
+
+        console.log("게시물 조회 성공");
+        dispatch(getPost(response.data));
+        history.replace("/post");
+      })
+      .catch((err) => {
+        console.log("게시물 조회 실패", err);
+      });
   };
 };
 
+// 내 게시물 조회
 const myPostFB = (postId) => {
   return function (dispatch, getState, { history }) {
-    console.log("내가 작성한 게시물 조회");
-    // axios
-    //   .get(`http://3.37.36.119/api/posts/${postId}`)
-    //   .then((response) => {
-    //     console.log("내가 작성한 게시물 조회 성공");
-    //     dispatch(getPost(response))
-    //     history.replace(`/post/${postId}`);
-    //   })
-    //   .catch((err) => {
-    //     console.log("내가 작성한 게시물 조회 실패", err);
-    //   });
+    const token = localStorage.getItem("user_token");
+
+    axios
+      .get("http://3.37.36.119/api/posts/" + postId, {
+        headers: { Authorization: token },
+      })
+      .then((response) => {
+        console.log("내가 작성한 게시물 조회 성공");
+        dispatch(getPost(response.data));
+      })
+      .catch((err) => {
+        console.log("내가 작성한 게시물 조회 실패", err);
+      });
   };
 };
 
+// 내가 댓글을 작성한 게시물 조회
 const myCommentFB = (commentId) => {
   return function (dispatch, getState, { history }) {
-    console.log("내가 댓글을 작성한 게시물 조회");
-    // axios
-    //   .get(`http://3.37.36.119/api/comments/${commentId}`)
-    //   .data({commentId : commentId})
-    //   .then((response) => {
-    //     console.log("내가 댓글을 작성한 게시물 조회 성공");
-    //     dispatch(getPost(response))
-    //     history.replace('/post');
-    //   })
-    //   .catch((err) => {
-    //     console.log("내가 댓글을 작성한 게시물 조회 실패", err);
-    //   });
+    const token = localStorage.getItem("user_token");
+
+    axios
+      .get(
+        `http://3.37.36.119/api/comments/${commentId}`,
+        {
+          headers: { Authorization: token },
+        },
+        { commentId: commentId }
+      )
+      .then((response) => {
+        console.log("내가 댓글을 작성한 게시물 조회 성공");
+
+        dispatch(getPost(response.data));
+      })
+      .catch((err) => {
+        console.log("내가 댓글을 작성한 게시물 조회 실패", err);
+      });
   };
 };
 
-const deletePostFB = () => {
+// 게시물 추가
+const addPostDB = (title, content, imageUrl) => {
   return function (dispatch, getState, { history }) {
-    console.log("게시물 삭제");
+    const token = localStorage.getItem("user_token");
+    axios
+      .post(
+        `http://3.37.36.119/api/posts`,
+
+        { title: title, content: content, imageUrl: imageUrl },
+        {
+          headers: { Authorization: token },
+        } // 400일때 헤더가 있는데 서버측에서 헤더가 없다고 하면 데이터값 뒤로 헤더를 빼주자
+      )
+      .then((response) => {
+        console.log(response);
+        // dispatch(addpost(title, content, imageUrl));
+        history.replace("/");
+      })
+      .catch((err) => {
+        console.log("글을 작성하려면 로그인을 하세요!", err);
+      });
+  };
+};
+
+// 게시물 수정
+
+// 게시물 삭제
+const deletePostDB = (postId) => {
+  return function (dispatch, getState, { history }) {
+    const token = localStorage.getItem("user_token");
+
+    axios
+      .delete(`http://3.37.36.119/api/posts/${postId}`, {
+        headers: { Authorization: token },
+      })
+      .then((response) => {
+        console.log("게시물 삭제 성공");
+      })
+      .catch((err) => {
+        console.log("게시물 삭제 실패", err);
+      });
+  };
+};
+
+// 댓글 작성
+const addCommentFB = (postId, comment) => {
+  return function (dispatch, getState, { history }) {
+    console.log("댓글 작성");
+
+    const token = localStorage.getItem("user_token");
+
+    axios
+      .post(
+        `http://3.37.36.119/api/comments/${postId}`,
+        { comment: comment },
+        { headers: { Authorization: token } }
+      )
+      .then((response) => {
+        console.log("댓글 작성 성공");
+
+        const _comment = {
+          commentId: getState().post.postId + 1,
+          comment: comment,
+          createdAt: moment().format("YYYY-MM-DD"),
+        };
+
+        const list = Object.values(getState().post.comments);
+        // post modules에 있는 commets가 객체 형태여서 ...를 사용하지 못함.
+        // 그래서 Object.values를 사용해서 배열로 만들어줌
+        // dispatch 할 때는 내가 작성한 댓글과 기존에 있던 댓글을 같이 보냄
+        dispatch(addComment([_comment, ...list]));
+      })
+      .catch((err) => {
+        console.log("댓글 작성 실패", err);
+      });
   };
 };
 
@@ -98,8 +190,17 @@ export default handleActions(
       produce(state, (draft) => {});
     },
     [GET_POST]: (state, action) => {
-      produce(state, (draft) => {
-        draft = action.payload.post;
+      return produce(state, (draft) => {
+        draft.postId = action.payload.postList.postId;
+        draft.title = action.payload.postList.title;
+        draft.imageUrl = action.payload.postList.imageUrl;
+        draft.content = action.payload.postList.content;
+        draft.comments = { ...action.payload.postList.comments };
+      });
+    },
+    [ADD_COMMENT]: (state, action) => {
+      return produce(state, (draft) => {
+        draft.comments = action.payload.commentList;
       });
     },
   },
@@ -111,9 +212,11 @@ const actionCreators = {
   setPost,
   getPost,
   randomPostFB,
-  deletePostFB,
   myPostFB,
   myCommentFB,
+  addPostDB,
+  deletePostDB,
+  addCommentFB,
 };
 
 export { actionCreators };

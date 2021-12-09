@@ -29,7 +29,7 @@ Span.defaultProps = {
 
 const SignUpSpan = styled.span`
   font-size: ${(props) => props.size};
-  color: ${(props) => (props.className === "success" ? "black" : "red")};
+  color: ${(props) => (props.className === "success" ? "green" : "red")};
 `;
 
 export default Span;

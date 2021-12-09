@@ -10,7 +10,6 @@ import { connectRouter } from "connected-react-router";
 import User from "./modules/user";
 import Post from "./modules/post";
 import Feed from './modules/feed';
-import Comment from './modules/comment';
 
 // *** 스토어에 히스토리 넣어주기 (리듀서랑 히스토리 연결하기)
 export const history = createBrowserHistory();
@@ -19,7 +18,6 @@ export const history = createBrowserHistory();
 const rootReducer = combineReducers({
     user : User,
     post : Post,
-    comment : Comment,
     feed : Feed,
     router : connectRouter(history),
 })
