@@ -34,6 +34,7 @@ const SignUp = (props) => {
   // 아이디 중복 체크
   const [overlap, setOverlap] = React.useState(false);
   const [idCurrent, setIdCurrent] = React.useState();
+  const [pwdCurrent, setPwdCurrent] = React.useState();
 
   // 유효성 검사
   const [isId, setIsId] = React.useState("");
@@ -55,11 +56,14 @@ const SignUp = (props) => {
 
   /* disabled 체크 */
   const checkActive = () => {
+    const regPwd = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{3,20}$/;
+
     overlap === true &&
     username !== "" &&
     password !== "" &&
     passwordCheck !== "" &&
-    password === passwordCheck
+    password === passwordCheck &&
+    regPwd.test(password)
       ? setActive(false)
       : setActive(true);
   };
@@ -72,20 +76,22 @@ const SignUp = (props) => {
         { username: username },
         { headers: { Authorization: token } }
       )
-      .then((response) => {
-        console.log("중복 검사 성공");
-        const regId = /^[a-zA-Z0-9]+([-_]|[a-zA-Z0-9]){2,19}$/g;
+      .then((response) => {        
         // 아이디가 중복되지 않은 경우 true 반환
         // 아이디가 중복인 경우 false 반환
+        console.log("중복 검사 성공");
+
+        const regId = /^[a-zA-Z0-9]+([-_]|[a-zA-Z0-9]){2,19}$/g;
+        const regPwd = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{3,20}$/;
 
         // 사용 가능한 아이디일 경우
-        if (response.data.result && regId.test(idCurrent)) {
+        if (response.data.result && regId.test(idCurrent) && idCurrent) {
           setIsId(true); // 유효성 검사 true
           setOverlap(response.data.result); // 중복 검사 true
           setIdMessage("사용 가능한 아이디입니다."); // span 태그
 
           // 비밀번호를 입력 안했을 경우 회원가입 버튼 비활성화
-          if (password === passwordCheck) {
+          if (password === passwordCheck && regPwd.test(pwdCurrent)) {
             setActive(false);
           }
         } else if (!regId.test(idCurrent)) {
@@ -128,6 +134,7 @@ const SignUp = (props) => {
     setPwd(e.target.value);
     const regPwd = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{3,20}$/;
     const pwdCurrent = e.target.value;
+    setPwdCurrent(pwdCurrent);
 
     if (!regPwd.test(pwdCurrent)) {
       setPwdMessage("영문, 숫자를 조합하여 3~20자로 만들어주세요!");

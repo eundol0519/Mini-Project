@@ -8,15 +8,21 @@ import axios from "axios";
 // *** 액션 타입
 const GET_POST = "GET_POST";
 const SET_POST = "SET_POST";
+const ADD_POST = "SET_POST";
 const EDIT_POST = "EDIT_POST";
 const ADD_COMMENT = "ADD_COMMENT";
+const DELETE_COMMENT = "DELETE_COMMENT";
 
 // *** 액션 생성 함수
 const setPost = createAction(SET_POST, (postList) => ({ postList }));
 const getPost = createAction(GET_POST, (postList) => ({ postList }));
-const editpost = createAction(EDIT_POST, (postId, post) => ({ postId, post }));
 const addComment = createAction(ADD_COMMENT, (commentList) => ({
   commentList,
+}));
+const addpost = createAction(ADD_POST, (title, content, imageUrl) => ({
+  title,
+  content,
+  imageUrl,
 }));
 
 // *** 초기값
@@ -120,7 +126,7 @@ const addPostDB = (title, content, imageUrl) => {
       )
       .then((response) => {
         console.log(response);
-        // dispatch(addpost(title, content, imageUrl));
+        dispatch(addpost(title, content, imageUrl));
         history.replace("/");
       })
       .catch((err) => {
@@ -130,6 +136,26 @@ const addPostDB = (title, content, imageUrl) => {
 };
 
 // 게시물 수정
+const editPostDB = (postId, content, imageUrl) => {
+  return function (dispatch, getState, { history }) {
+    const token = localStorage.getItem("user_token");
+    axios
+      .put(
+        `http://3.37.36.119/api/posts/${postId}`,
+
+        { content: content, imageUrl: imageUrl },
+        {
+          headers: { Authorization: token },
+        } // 400일때 헤더가 있는데 서버측에서 헤더가 없다고 하면 데이터값 뒤로 헤더를 빼주자
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log("글을 작성하려면 로그인을 하세요!", err);
+      });
+  };
+};
 
 // 게시물 삭제
 const deletePostDB = (postId) => {
@@ -198,6 +224,14 @@ export default handleActions(
         draft.comments = { ...action.payload.postList.comments };
       });
     },
+    [ADD_POST]: (state, action) => {
+      return produce(state, (draft) => {
+        draft.title = action.payload.title;
+        draft.content = action.payload.content;
+        draft.imageUrl = action.payload.imageUrl;
+        // console.log(action.payload.title);
+      });
+    },
     [ADD_COMMENT]: (state, action) => {
       return produce(state, (draft) => {
         draft.comments = action.payload.commentList;
@@ -215,6 +249,7 @@ const actionCreators = {
   myPostFB,
   myCommentFB,
   addPostDB,
+  editPostDB,
   deletePostDB,
   addCommentFB,
 };

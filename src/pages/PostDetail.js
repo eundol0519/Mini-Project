@@ -1,8 +1,9 @@
 // PostDetail.js
 
 // *** 패키지 import
-import React, { useState } from "react";
-import { Grid, Button, Text, Input } from "../elements/index";
+import React from "react";
+import styled from "styled-components";
+import { Grid, Button, Text } from "../elements/index";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -20,7 +21,6 @@ const PostDetail = (props) => {
   const postInfo = useSelector((state) => state.post);
 
   React.useEffect(() => {
-
     // 랜덤한 게시물일 경우
     if (!params.postId && !postInfo.postId) {
       // 랜덤한 정보를 서버에 요청
@@ -45,7 +45,8 @@ const PostDetail = (props) => {
 
   // 수정 버튼 클릭 시
   const postUpdate = () => {
-    history.push({ pathnamae: "/postWrite", isEdit: true });
+    history.push(`/edit/${params.postId}`); // 임시용
+    // history.push({ pathnamae: "/postWrite", isEdit: true });
   };
 
   // 삭제 버튼 클릭 시
@@ -55,7 +56,7 @@ const PostDetail = (props) => {
     if (deleteCheck) {
       dispatch(postActions.deletePostDB(params.postId));
       window.alert("게시물이 삭제 되었습니다.");
-      history.replace("/");
+      window.location.href = "/feed";
     }
   };
 
@@ -69,26 +70,24 @@ const PostDetail = (props) => {
     return (
       <React.Fragment>
         <Header></Header>
-        <Grid margin="6% 0px 1% 0px">
+        <Grid margin="1% 0px 1% 0px">
           <Grid>
-            {postInfo.imageUrl && (
+            {postInfo.imageUrl ? (
               <img
                 src={`http://3.37.36.119${postInfo.imageUrl}`}
                 alt="게시물 사진"
-                width="50%"
+                width="30%"
               ></img>
+            ) : (
+              <Grid margin="8% 0px 0px 0px"></Grid>
             )}
           </Grid>
           <Grid margin="2% 0px 0px 0px">
-            <Text margin="auto" size="1em" width="40%" height="10vh">
+            <Text margin="auto" bold size="2em" width="40%" height="5vh">
               {postInfo.title}
             </Text>
-            <Text
-              margin="auto"
-              size="1em"
-              width="40%"
-              padding="3%"
-            >
+            <Hr />
+            <Text margin="auto" size="1.5em" width="40%" height="5vh">
               {postInfo.content}
             </Text>
           </Grid>
@@ -110,7 +109,7 @@ const PostDetail = (props) => {
         <Grid>
           <CommentWrite></CommentWrite>
         </Grid>
-        <Grid>
+        <Grid margin="0px 0px 3% 0px">
           <CommentList></CommentList>
         </Grid>
       </React.Fragment>
@@ -121,26 +120,24 @@ const PostDetail = (props) => {
     // 랜덤한 게시물일 경우
     <React.Fragment>
       <Header></Header>
-      <Grid margin="10% 0px 2% 0px">
+      <Grid margin="1% 0px 1% 0px">
         <Grid>
-          {postInfo.imageUrl && (
+          {postInfo.imageUrl ? (
             <img
               src={`http://3.37.36.119${postInfo.imageUrl}`}
               alt="게시물 사진"
-              width="50%"
+              width="30%"
             ></img>
+          ) : (
+            <Grid margin="8% 0px 0px 0px"></Grid>
           )}
         </Grid>
         <Grid margin="2% 0px 0px 0px">
-          <Text margin="auto" size="1em" width="40%" height="10vh">
+          <Text margin="auto" bold size="2em" width="40%" height="5vh">
             {postInfo.title}
           </Text>
-          <Text
-            margin="auto"
-            size="1em"
-            width="40%"
-            height="15vh"
-          >
+          <Hr />
+          <Text margin="auto" size="1.5em" width="40%" height="5vh">
             {postInfo.content}
           </Text>
         </Grid>
@@ -148,7 +145,7 @@ const PostDetail = (props) => {
       <Grid margin="1% 0px 1% 0px">
         <Button
           text="넘어가기"
-          width="20vw"
+          width="10vw"
           margin="auto"
           _onClick={nextPost}
         ></Button>
@@ -156,11 +153,15 @@ const PostDetail = (props) => {
       <Grid>
         <CommentWrite></CommentWrite>
       </Grid>
-      <Grid>
+      <Grid margin="0px 0px 3% 0px">
         <CommentList></CommentList>
       </Grid>
     </React.Fragment>
   );
 };
+
+const Hr = styled.hr`
+  width: 35%;
+`;
 
 export default PostDetail;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const Button = (props) => {
   const {
+    position,
     text,
     _onClick,
     is_float,
@@ -12,6 +13,7 @@ const Button = (props) => {
     className,
     padding,
     disabled,
+    height,
   } = props;
 
   if (is_float) {
@@ -23,9 +25,11 @@ const Button = (props) => {
   }
 
   const styles = {
+    position: position,
     margin: margin,
     width: width,
     padding: padding,
+    height,
   };
 
   return (
@@ -43,6 +47,8 @@ const Button = (props) => {
 };
 
 Button.defaultProps = {
+  position: null,
+  cursor: "pointer",
   className: "",
   text: false,
   children: null,
@@ -52,13 +58,17 @@ Button.defaultProps = {
   width: "100%",
   padding: "12px 0px",
   disabled: false,
+  height: null,
 };
 
 const ElButton = styled.button`
+  ${(props) => (props.position ? `position: ${props.position};` : "")}
+  cursor: pointer;
+  height: ${(props) => props.height};
   width: ${(props) => props.width};
   background-color: ${(props) =>
     props.className === "unActiveBtn" ? "gray" : "black"};
-  color: #ffffff;
+  color: #e2e2e2;
   padding: ${(props) => props.padding};
   box-sizing: border-box;
   border: none;
@@ -66,6 +76,7 @@ const ElButton = styled.button`
 `;
 
 const FloatButton = styled.button`
+  cursor: pointer;
   width: 50px;
   height: 50px;
   background-color: #212121;

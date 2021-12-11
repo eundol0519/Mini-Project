@@ -32,7 +32,7 @@ const Feed = (props) => {
   const commentDetail = (commentId) => {
     console.log("댓글 페이지 이동");
     dispatch(postActions.myCommentFB(commentId));
-    history.push('/post')
+    history.push("/post");
   };
 
   if (!user_token) {
@@ -43,7 +43,7 @@ const Feed = (props) => {
   return (
     <React.Fragment>
       <Header></Header>
-      <Grid center>
+      <Grid center margin="1% 0px 0px 0px">
         <Text size="1.5em" bold>
           내가 작성한 글
         </Text>
@@ -71,10 +71,11 @@ const Feed = (props) => {
         <Text size="1.5em" bold>
           내가 답변한 글
         </Text>
-        <Grid is_flex padding="10px" width="auto" justifyContent>
+        <Grid is_flex padding="15px" width="auto" flexFlow>
           {feedInfo.myComments.map((c) => {
             return (
               <Post
+                padding="5px"
                 noWrap
                 _onClick={() => {
                   commentDetail(c.commentId);

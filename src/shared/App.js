@@ -16,6 +16,7 @@ import Login from "../pages/Login";
 import PostWrite from "../pages/PostWrite";
 import PostDetail from "../pages/PostDetail";
 import Feed from "../pages/Feed";
+import EditPost from '../pages/EditPost';
 
 function App() {
   const user_token = localStorage.getItem("user_token") ? true : false;
@@ -37,6 +38,7 @@ function App() {
         <Route path="/post" exact component={PostDetail}></Route>
         <Route path="/post/:postId" exact component={PostDetail}></Route>
         <Route path="/postWrite" exact component={PostWrite}></Route>
+        <Route path="/edit/:postId" exact component={EditPost}></Route>
       </ConnectedRouter>
     </div>
   );

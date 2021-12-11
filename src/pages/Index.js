@@ -1,7 +1,7 @@
 // Index.js
 
 // *** 패키지 import
-import mainImage from "../mainImage.png";
+import mainImage from "../shared/images/middleLogo.png";
 import { Grid, Button, Text } from "../elements/index";
 import Header from "../components/Header";
 
@@ -19,13 +19,13 @@ const Index = (props) => {
   const [isLogin, setIsLogin] = React.useState(user_token);
 
   const viewPost = () => {
-    dispatch(postActions.randomPostFB())
-  }
+    dispatch(postActions.randomPostFB());
+  };
 
   return (
     <div>
       <Header></Header>
-      <Grid padding="1%">
+      <Grid margin="0px 0px 5% 0px">
         <Text size="2vw" bold>
           익명의 멘탈 케어 사용 설명서
         </Text>
@@ -38,6 +38,7 @@ const Index = (props) => {
           <Grid is_flex margin="40px 0px 40px 0px" center>
             <Button
               width="20vw"
+              height="6vh"
               margin="0px 0px 0px 28%"
               _onClick={() => {
                 history.push("/postWrite");
@@ -47,6 +48,7 @@ const Index = (props) => {
             </Button>
             <Button
               width="20vw"
+              height="6vh"
               margin="0px 28% 0px 0px"
               _onClick={viewPost}
             >

@@ -64,7 +64,7 @@ const AspectOutter = styled.div`
 //background-position: center;
 const AspectInner = styled.div`
   margin: 0 auto;
-  padding-top: 75%; // 넓이의 4:3 반응형 직사각형을 만들거기 때문에 75%를 줬다.
+  padding-top: 60%; // 넓이의 4:3 반응형 직사각형을 만들거기 때문에 75%를 줬다.
   overflow: hidden;
   background-image: url("${(props) => props.src}");
   background-size: contain;

@@ -11,22 +11,17 @@ const Post = (props) => {
 
   if (noWrap) {
     return (
-      <div
-        style={{
-          width: "100%",
-          padding: "1% 0px 0px 0px",
-          borderRadius: "10px",
-          margin: "1% 1% 1% 1%",
-          height: "30px",
-          border: "1px solid black",
-        }}
-      >
-        <Grid _onClick={_onClick} is_flex>
+      <div style={{ marginBottom: "2%" }}>
+        <Grid padding="10px" _onClick={_onClick} noWrap is_flex>
           <Grid>
-            <Text margin="0px">{props.comment}</Text>
+            <Text width="350px" margin="5% 0% 0% 11%">
+              {props.comment}
+            </Text>
           </Grid>
           <Grid>
-            <Text margin="0px">{props.createdAt}</Text>
+            <Text width="350px" margin="5% 0% 0% 11%">
+              {props.createdAt}
+            </Text>
           </Grid>
         </Grid>
       </div>
@@ -41,18 +36,21 @@ const Post = (props) => {
           width: "16rem",
           height: "250px",
           lineHeight: "100px",
-          borderRadius: "10px",
+          borderRadius: "30px",
           textAlign: "center",
-          margin: "0% 1% 1% 1%",
-          border: "1px solid black",
+          margin: "1% 3% 2% 1%",
+          // border: "1px solid black",
+          backgroundColor: "#FAFAFA",
+          boxShadow: "0px 5px 16px rgba(180, 150, 150, 0.4)",
         }}
         onClick={_onClick}
       >
         <Card.Header
           style={{
+            fontSize: "25px",
             width: "200px",
-            height: "120px",
-            textAlign: "center",
+            height: "75px",
+            textAlign: "left",
             margin: "auto",
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -66,7 +64,7 @@ const Post = (props) => {
             style={{
               width: "200px",
               height: "200px",
-              textAlign: "center",
+              textAlign: "left",
               margin: "auto",
               overflow: "hidden",
               textOverflow: "ellipsis",

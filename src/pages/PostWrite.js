@@ -82,18 +82,20 @@ const PostWrite = (props) => {
   return (
     <React.Fragment>
       <Header></Header>
-      <Grid margin="2% 0px 0px 0px">
+      <Grid>
         <input
+          cursor="pointer"
           type="file"
           name="file"
+          id="input-file"
           encType="multipart/form-data"
           onChange={selectFile}
           ref={fileInput}
         />
         <Button
           cusror="pointer"
-          height="30px"
-          width="8%"
+          height="4%"
+          width="6%"
           margin="30px 0px -20px -60px"
           _onClick={uploadDB}
         >
@@ -124,6 +126,7 @@ const PostWrite = (props) => {
         <Grid margin="0px 0px 1% 0px">
           <Input
             value={title}
+            postInput
             placeholder="제목을 입력 해주세요"
             _onChange={changeTitle}
             _onKeyUp={checkActive}
@@ -133,7 +136,8 @@ const PostWrite = (props) => {
           <Input
             value={contents}
             placeholder="내용을 작성 해주세요"
-            multiLine
+            rows="10"
+            postMultiLine
             _onChange={changeContents}
             _onKeyUp={checkActive}
           />

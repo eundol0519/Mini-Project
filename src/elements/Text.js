@@ -2,7 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 const Text = (props) => {
-  const { bold, color, size, children, margin, border, width, height, padding } = props;
+  const {
+    bold,
+    color,
+    size,
+    children,
+    margin,
+    border,
+    width,
+    height,
+    padding,
+  } = props;
 
   const styles = {
     bold: bold,
@@ -39,7 +49,9 @@ const P = styled.p`
   line-height: ${(props) => props.height};
   ${(props) => (props.margin ? `margin: ${props.margin};` : "")};
   ${(props) => (props.padding ? `padding: ${props.padding};` : "")};
-  word-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export default Text;
